@@ -18,6 +18,10 @@ class Square(Function):
     def forward(self, x):
         return x ** 2
 
+class Exp(Function):
+    def forward(self, x):
+        return np.exp(x)
+
 def numerical_diff(f, x, eps=1e-4):
     x0 = Variable(x.data - eps)
     x1 = Variable(x.data + eps)
@@ -30,4 +34,14 @@ import numpy as np
 f = Square()
 x = Variable(np.array(2.0))
 dy = numerical_diff(f, x)
-print('dy: ', dy)
+print('x^2の微分 dy: ', dy)
+
+def f(x):
+    A = Square()
+    B = Exp()
+    C = Square()
+    return C(B(A(x)))
+
+x = Variable(np.array(0.5))
+dy = numerical_diff(f, x)
+print('合成関数 dy: ', dy)
