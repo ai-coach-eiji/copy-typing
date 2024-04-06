@@ -44,4 +44,4 @@ def f(x):
 
 x = Variable(np.array(0.5))
 dy = numerical_diff(f, x)
-print('合成関数 dy: ', dy)
+print('合成関数 dy: ', dy) # output: 3.297（xを0.5から微小なだけ値を変化させるとyは3.297倍だけ変化する）
