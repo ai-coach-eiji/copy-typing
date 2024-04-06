@@ -3,7 +3,7 @@ class Variable:
         self.data = data
 
 class Function:
-    def __call__(self, input):
+    def __call__(self, input): # callメソッドの役割: Variableからデータを取り出し, 結果をVariableに詰める
         x = input.data
         y = self.forward(x)
         output = Variable(y)
@@ -12,10 +12,14 @@ class Function:
     def forward(self, x):
         raise NotImplementedError()
 
+class Square(Function):
+    def forward(self, x):
+        return x ** 2
+
 import numpy as np
 
 x = Variable(np.array(10))
-f = Function()
+f = Square()
 y = f(x)
 
 print("type(y): ", type(y))
