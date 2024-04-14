@@ -45,3 +45,22 @@ plt.plot(x, y)
 plt.xlabel("x")
 plt.ylabel("y")
 plt.show()
+
+# パラメータの役割
+# 1. σを固定してμの値を変化させる
+# 形状は同じだが、確率密度の最大値（山のピーク = μの位置）が異なる
+
+x = np.linspace(-10, 10, 1000)
+y0 = normal(x, mu=-3)
+y1 = normal(x, mu=0)
+y2 = normal(x, mu=5)
+
+plt.plot(x, y0, label="$\mu$=-3")
+plt.plot(x, y1, label="$\mu$=0")
+plt.plot(x, y2, label="$\mu$=5")
+
+plt.legend()
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+
