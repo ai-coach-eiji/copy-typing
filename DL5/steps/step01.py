@@ -26,6 +26,11 @@
 # --- 正規分布（Normal Distribution）の定義式 ---
 # N(x; μ, σ) = 1 / {(√2π) * σ} * exp(-(x-μ)^2 / 2σ^2)
 
+# 標準正規分布: 平均が0、標準偏差が1の正規分布
+# 平均0を中心に左右対称の山を形成し、曲線の形は釣り鐘（Bell Curve）とも呼ばれる
+# N(x; μ=0, σ=1) = 1 / (√2π) * exp(-(x^2 / 2))
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 
