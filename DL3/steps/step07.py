@@ -1,3 +1,7 @@
+# 逆伝播の自動化
+# Define-by-Run: 計算（で使用される変数や関数）のつながり（生みの親）をその計算が行われるタイミングで作る仕組み
+# ここでは変数（Variable）につながりを記録している
+
 class Variable:
     def __init__(self, data):
         self.data = data
