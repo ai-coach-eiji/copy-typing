@@ -10,6 +10,13 @@ class Variable:
 
     def set_creator(self, func):
         self.creator = func
+    
+    def backward(self):
+        f = self.creator
+        if f is not None: # 生みの親がない（None）の場合はユーザによる入力（逆伝播はそこで止まる）
+            x = f.input
+            x.grad = f.backward(self.grad)
+            x.backward() # 再帰
 
 class Function:
     def __call__(self, input):
@@ -67,6 +74,8 @@ assert y.creator.input.creator.input == a
 assert y.creator.input.creator.input.creator == A
 assert y.creator.input.creator.input.creator.input == x
 
+
+# 逆伝播の手動実行
 y.grad = np.array(1.0)
 
 C = y.creator
@@ -78,4 +87,18 @@ a.grad = B.backward(b.grad)
 A = a.creator
 x = A.input
 x.grad = A.backward(a.grad)
-print("x grad: ", x.grad)
+print("x grad（手動）: ", x.grad)
+
+# 逆伝播の自動実行
+A = Square()
+B = Exp()
+C = Square()
+
+x = Variable(np.array(0.5))
+a = A(x)
+b = B(a)
+y = C(b)
+
+y.grad = np.array(1.0)
+y.backward()
+print("x grad（自動）: ", x.grad)
