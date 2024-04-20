@@ -1,6 +1,7 @@
 # 3つの改善
-# 1. 関数内でクラスのインスタンス化を行い、作業の手間を省く
-# また、ループ方式の方がメモリ効率が良い（再帰は途中結果をメモリに残しながら処理する）
+# 1. Pythonの関数として利用（関数内でクラスのインスタンス化を行い、作業の手間を省く）
+# 2. 逆伝播の簡略化（dy=1 を省略するためにbackwardメソッドに np.ones_like を使用）
+# 3. 
 
 class Variable:
     def __init__(self, data):
@@ -12,6 +13,9 @@ class Variable:
         self.creator = func
     
     def backward(self):
+        if self.grad is None:
+            self.grad = np.ones_like(self.data) # 同じ形状かつ同じデータ型で、要素が1のndarrayインスタンス
+
         funcs = [self.creator]
         while funcs:
             f = funcs.pop()
@@ -26,9 +30,9 @@ class Function:
         x = input.data
         y = self.forward(x)
         output = Variable(y)
-        output.set_creator(self) # 生みの親として自身を設定する
+        output.set_creator(self)
         self.input = input 
-        self.output = output # 次のステップで使用
+        self.output = output
         return output
     
     def forward(self, x):
@@ -68,10 +72,6 @@ def exp(x):
 import numpy as np
 
 x = Variable(np.array(0.5))
-a = square(x)
-b = exp(a)
-y = square(b)
-
-y.grad = np.array(1.0)
+y = square(exp(square(x)))
 y.backward()
 print("x grad: ", x.grad)
