@@ -1,10 +1,15 @@
 # 3つの改善
 # 1. Pythonの関数として利用（関数内でクラスのインスタンス化を行い、作業の手間を省く）
 # 2. 逆伝播の簡略化（dy=1 を省略するためにbackwardメソッドに np.ones_like を使用）
-# 3. 
+# 3. ndarrayだけを扱う（ためにVariableクラスの初期化メソッドに isinstance を使用）
+# 3の変更に伴い、0次元のndarrayには注意する（numpy.float64になってしまうため、便利関数でndarrayに変換する）
 
 class Variable:
     def __init__(self, data):
+        if data is not None:
+            if not isinstance(data, np.ndarray):
+                raise TypeError(f"{type(data)} is not supported")
+
         self.data = data
         self.grad = None
         self.creator = None
@@ -25,11 +30,16 @@ class Variable:
             if x.creator is not None:
                 funcs.append(x.creator)
 
+def as_array(x):
+    if np.isscalar(x):
+        return np.array(x)
+    return x
+
 class Function:
     def __call__(self, input):
         x = input.data
         y = self.forward(x)
-        output = Variable(y)
+        output = Variable(as_array(y))
         output.set_creator(self)
         self.input = input 
         self.output = output
@@ -72,6 +82,9 @@ def exp(x):
 import numpy as np
 
 x = Variable(np.array(0.5))
+# x = Variable(0.5) # データ型がndarrayではないため例外を発生（TypeError: <class 'float'> is not supported）
+
 y = square(exp(square(x)))
 y.backward()
 print("x grad: ", x.grad)
+
