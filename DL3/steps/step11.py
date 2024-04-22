@@ -1,3 +1,5 @@
+# 可変長引数に対応させる
+
 class Function:
     def __call__(self, inputs):
         xs = [x.data for x in inputs]
