@@ -12,8 +12,11 @@
         document.write("tf.tensor: ", first, "<br>")
         
         const second = tf.tensor1d(dataArray) // 引数の次元をチェックできる（次元を保証できるのは6dまで）
-        document.write("tf.tensor1d: ", second)
+        document.write("tf.tensor1d: ", second, "<br>")
         
+        // テンソルのデータ型は一様でなければいけない
+        const dataF = tf.tensor([1.1, 2.2, 3.3])
+        document.write("tf.tensor([1.1, 2.2, 3.3]) Data type: ", dataF.dtype) // 浮動小数点の場合はデフォルトでfloat32で値が保持される
     </script>
 </head>
 <body>
