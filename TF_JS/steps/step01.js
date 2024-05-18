@@ -19,3 +19,6 @@ const dataI2 = tf.tensor([true, true, false], null, "int32") // int32を指定�
 document.write("tf.tensor([true, true, false], null, 'int32') Data type: ", dataI2.dtype, "<br>")
 // Size
 document.write("tf.tensor([true, true, false]) Size: ", dataI2.size, "<br>")
+// 一次元の入力配列を二次元のテンソルに変換
+const d = tf.tensor([1,1,0,1,1,1,0,0,1], [3,3], 'int32') // 数値として安心なのはデフォルトのfloat32（int32は、丸めて保持してもかまわない時に使う）
+document.write("tf.tensor([1,1,0,1,1,1,0,0,1], [3,3], 'int32'): ", d, "<br>")
