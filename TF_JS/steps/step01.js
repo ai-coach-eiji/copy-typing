@@ -22,3 +22,7 @@ document.write("tf.tensor([true, true, false]) Size: ", dataI2.size, "<br>")
 // 一次元の入力配列を二次元のテンソルに変換
 const d = tf.tensor([1,1,0,1,1,1,0,0,1], [3,3], 'int32') // 数値として安心なのはデフォルトのfloat32（int32は、丸めて保持してもかまわない時に使う）
 document.write("tf.tensor([1,1,0,1,1,1,0,0,1], [3,3], 'int32'): ", d, "<br>")
+// 新しい型のテンソルを作成
+const nope = tf.tensor([1.1,1,0,1,1,1,0,0,1])
+const y = nope.asType('int32') // ただし、あまり賢い方法ではない（小数点以下を取り除くだけで、正しい四捨五入ではない）
+document.write("tf.tensor([1.1,1,0,1,1,1,0,0,1]).asType('float32'): ", y.dtype, "<br>")
