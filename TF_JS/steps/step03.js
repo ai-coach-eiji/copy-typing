@@ -13,3 +13,9 @@ console.log(snap) // 内部のデータではなく、オブジェクトの構�
 // isDisposed: (...)
 // rank: (...)
 // [[Prototype]]: Object
+
+const crackle = tf.tensor([3.141592])
+crackle.print() // テンソルのprint()メソッドで、内部の実際の値がコンソールに表示される
+
+// ただし、このメソッドは値を返さず、内部で値を直接 console.log に渡している
+// 内部の実際の値を使用したければ、Javascript変数として取り出さなければいけない
