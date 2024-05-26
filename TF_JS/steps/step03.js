@@ -19,3 +19,6 @@ crackle.print() // テンソルのprint()メソッドで、内部の実際の値
 
 // ただし、このメソッドは値を返さず、内部で値を直接 console.log に渡している
 // 内部の実際の値を使用したければ、Javascript変数として取り出さなければいけない
+const pop = tf.tensor([[1,2,3], [4,5,6]])
+console.log("pop.arraySync(): ", pop.arraySync()) // 2Dテンソルの値が2D配列として返る
+console.log("pop.dataSync(): ", pop.dataSync()) // 2Dテンソルが平坦化された一次元Float32Arrayになる
