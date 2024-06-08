@@ -62,4 +62,11 @@ class Add(Function):
 x0, x1 = Variable(np.array(2)), Variable(np.array(3))
 f = Add()
 y = f(x0, x1)
-print('y.data: ', y.data)
+print('クラスの結果: ', y.data)
+
+# AddクラスをPythonの関数として使う
+def add(x0, x1):
+    return Add()(x0, x1)
+
+y = add(x0, x1)
+print('関数の結果: ', y.data)
