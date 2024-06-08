@@ -1,11 +1,14 @@
 # ユーザにリストを用意させない（直感的に使用できるようにする）
+# プログラマはクラス（Addなど）を実装しやすくするために基底クラスを修正
 
 import numpy as np
 
 class Function:
     def __call__(self, *inputs):
         xs = [x.data for x in inputs]
-        ys = self.forward(xs)
+        ys = self.forward(*xs) # 修正1. リストのアンパック
+        if not isinstance(ys, tuple): # 修正2. タプルではない時の追加対応
+            ys = (ys,)
         outputs = [Variable(as_array(y)) for y in ys]
 
         for output in outputs:
@@ -52,10 +55,9 @@ def as_array(x):
     return x
 
 class Add(Function):
-    def forward(self, xs):
-        x0, x1 = xs
+    def forward(self, x0, x1):
         y = x0 + x1
-        return (y,)
+        return y
 
 x0, x1 = Variable(np.array(2)), Variable(np.array(3))
 f = Add()
